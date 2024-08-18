@@ -1,20 +1,20 @@
 ---
-import { getImage } from 'astro:assets'
-import brandSrc from '@images/brand_logo.jpeg'
-import faviconSvgSrc from '@images/favicon_icon.svg'
-import faviconSrc from '@images/favicon_icon.png'
-import { SEO, SITE } from '@/config'
+import { getImage } from "astro:assets";
+import brandSrc from "@images/brand_logo.jpeg";
+import faviconSvgSrc from "@images/favicon_icon.svg";
+import faviconSrc from "@images/favicon_icon.png";
+import { SEO, SITE } from "@/config";
 
 interface Props {
-    title: string
-    description: string
-    ogImage?: any
-    ogTitle?: string
-    ogDescription?: string
-    structuredData?: object
+    title: string;
+    description: string;
+    ogImage?: any;
+    ogTitle?: string;
+    ogDescription?: string;
+    structuredData?: object;
 }
 
-const canonicalURL = Astro.url.href
+const canonicalURL = Astro.url.href;
 let {
     title,
     description,
@@ -22,26 +22,34 @@ let {
     ogTitle = title,
     ogDescription = description,
     structuredData = SEO.structuredData,
-} = Astro.props
+} = Astro.props;
 
-let card = 'summary_large_image'
+let card = "summary_large_image";
 if (!ogImage) {
-    ogImage = brandSrc
-    card = 'summary'
+    ogImage = brandSrc;
+    card = "summary";
 }
 
-const faviconSvg = await getImage({ src: faviconSvgSrc, format: 'svg' })
-const appleTouchIcon = await getImage({ src: faviconSrc, width: 180, height: 180, format: 'png' })
-const socialImageRes = await getImage({ src: ogImage, width: 1200, height: 600 })
+const faviconSvg = await getImage({ src: faviconSvgSrc, format: "svg" });
+const appleTouchIcon = await getImage({
+    src: faviconSrc,
+    width: 180,
+    height: 180,
+    format: "png",
+});
+const socialImageRes = await getImage({
+    src: ogImage,
+    width: 1200,
+    height: 600,
+});
 
-let socialImage = socialImageRes.src
-if (!socialImage.startsWith('http')) {
-    socialImage = Astro.url.origin + socialImageRes.src
+let socialImage = socialImageRes.src;
+if (!socialImage.startsWith("http")) {
+    socialImage = Astro.url.origin + socialImageRes.src;
 }
 ---
 
-<!-- Inject structured data https://developers.google.com/search/docs/advanced/structured-data/intro-structured-data -->
-{
+<!-- Inject structured data https://developers.google.com/search/docs/advanced/structured-data/intro-structured-data -->{
     structuredData && (
         <script
             type="application/ld+json"
@@ -55,7 +63,10 @@ if (!socialImage.startsWith('http')) {
 <meta name="description" content={description} />
 <meta charset="utf-8" />
 <meta name="web_author" content={SITE.author} />
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, minimum-scale=1.0" />
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0, maximum-scale=5.0, minimum-scale=1.0"
+/>
 <meta name="generator" content={Astro.generator} />
 <meta http-equiv="X-UA-Compatible" content="ie=edge" />
 <meta name="mobile-web-app-capable" content="yes" />

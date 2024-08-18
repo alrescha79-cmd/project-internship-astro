@@ -1,16 +1,18 @@
 ---
-import NavLink from '@components/ui/links/NavLink.astro'
-import BrandLogo from '@components/ui/logos/BrandLogo.astro'
-import Theme from '@components/ui/logos/Theme.astro'
-import { NavigationLinks } from '@/config'
+import NavLink from "@components/ui/links/NavLink.astro";
+import BrandLogo from "@components/ui/logos/BrandLogo.astro";
+import Theme from "@components/ui/logos/Theme.astro";
+import { NavigationLinks } from "@/config";
 ---
 
-<header class="sticky inset-x-0 top-4 z-50 flex w-full flex-wrap text-sm md:flex-nowrap md:justify-start">
+<header
+    class="sticky inset-x-0 top-4 z-50 flex w-full flex-wrap text-sm md:flex-nowrap md:justify-start"
+>
     <nav
         class="relative mx-2 w-full rounded-[36px] border border-neutral-100 bg-neutral-100 px-4 py-3 backdrop-blur-md dark:border-neutral-700/40 dark:bg-neutral-800/80 dark:backdrop-blur-md md:flex md:items-center md:justify-between md:px-6 lg:px-8 xl:mx-auto"
         aria-label="Global"
     >
-        <div class="flex items-center justify-between ">
+        <div class="flex items-center justify-between">
             <a
                 class="h-[42px] flex-none rounded-lg text-xl font-bold outline-none ring-zinc-500 focus-visible:ring dark:ring-zinc-200 dark:focus:outline-none"
                 href="/"
@@ -70,9 +72,11 @@ import { NavigationLinks } from '@/config'
             <div
                 class="mt-5 flex flex-col gap-x-0 gap-y-4 md:mt-0 md:flex-row md:items-center md:justify-end md:gap-x-4 lg:gap-x-7 md:gap-y-0 md:ps-7"
             >
-                {NavigationLinks.map(link => (
-                    <NavLink url={link.url} name={link.name} />
-                ))}
+                {
+                    NavigationLinks.map(link => (
+                        <NavLink url={link.url} name={link.name} />
+                    ))
+                }
                 <span class="hidden md:inline-block">
                     <Theme />
                 </span>
@@ -99,119 +103,120 @@ const ViewTransitionStyleCSS = `::view-transition-group(root) {
     to {
         mask-size: 350vmax;
     }
-}`
-const viewTransitionStyleElement = document.createElement('style')
-document.head.appendChild(viewTransitionStyleElement)
-const injectViewTransitionStyleCSS = () => viewTransitionStyleElement.textContent = ViewTransitionStyleCSS
+}`;
+const viewTransitionStyleElement = document.createElement("style");
+document.head.appendChild(viewTransitionStyleElement);
+const injectViewTransitionStyleCSS = () => (viewTransitionStyleElement.textContent = ViewTransitionStyleCSS);
 
-const HSThemeAppearance = {
-    init() {
-        const defaultTheme = 'default'
-        const theme = localStorage.getItem('hs_theme') || defaultTheme
+const HSThemeAppearance = { init() {
+    const defaultTheme = "default";
+    const theme = localStorage.getItem("hs_theme") || defaultTheme;
 
-        if (document.querySelector('html').classList.contains('dark')) {
-            return
-        }
-
-        this.setAppearance(theme)
-    },
-
-    _resetStylesOnLoad() {
-        const $resetStyles = document.createElement('style')
-        $resetStyles.textContent = `*{transition: unset !important;}`
-        $resetStyles.setAttribute('data-hs-appearance-onload-styles', '')
-        document.head.appendChild($resetStyles)
-        return $resetStyles
-    },
-
-    setAppearance(theme, saveInStore = true, dispatchEvent = true) {
-        const $resetStylesEl = this._resetStylesOnLoad()
-
-        if (saveInStore) {
-            localStorage.setItem('hs_theme', theme)
-        }
-
-        if (theme === 'auto') {
-            theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'default'
-        }
-
-        document.querySelector('html').classList.remove('dark')
-        document.querySelector('html').classList.remove('default')
-        document.querySelector('html').classList.remove('auto')
-
-        document.querySelector('html').classList.add(this.getOriginalAppearance())
-
-        setTimeout(() => $resetStylesEl.remove())
-
-        if (dispatchEvent) {
-            window.dispatchEvent(new CustomEvent('on-hs-appearance-change', { detail: theme }))
-        }
-    },
-
-    getAppearance() {
-        let theme = this.getOriginalAppearance()
-        if (theme === 'auto') {
-            theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'default'
-        }
-
-        return theme
-    },
-
-    getOriginalAppearance() {
-        const defaultTheme = 'default'
-        return localStorage.getItem('hs_theme') || defaultTheme
-    },
-}
-
-HSThemeAppearance.init()
-
-window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
-    if (HSThemeAppearance.getOriginalAppearance() === 'auto') {
-        HSThemeAppearance.setAppearance('auto', false)
+    if (document.querySelector("html").classList.contains("dark")) {
+        return;
     }
-})
 
-window.addEventListener('load', () => {
+    this.setAppearance(theme);
+}, _resetStylesOnLoad() {
+    const $resetStyles = document.createElement("style");
+    $resetStyles.textContent = `*{transition: unset !important;}`;
+    $resetStyles.setAttribute("data-hs-appearance-onload-styles", "");
+    document.head.appendChild($resetStyles);
+    return $resetStyles;
+}, setAppearance(theme, saveInStore = true, dispatchEvent = true) {
+    const $resetStylesEl = this._resetStylesOnLoad();
+
+    if (saveInStore) {
+        localStorage.setItem("hs_theme", theme);
+    }
+    if (theme === "auto") {
+        theme = window.matchMedia("(prefers-color-scheme: dark)")
+            .matches
+            ? "dark"
+            : "default";
+    }
+
+    document.querySelector("html").classList.remove("dark");
+    document.querySelector("html").classList.remove("default");
+    document.querySelector("html").classList.remove("auto");
+
+    document.querySelector("html").classList.add(this.getOriginalAppearance());
+
+    setTimeout(() => $resetStylesEl.remove());
+
+    if (dispatchEvent) {
+        window.dispatchEvent(
+            new CustomEvent("on-hs-appearance-change", {
+                detail: theme,
+            }),
+        );
+    }
+}, getAppearance() {
+    let theme = this.getOriginalAppearance();
+    if (theme === "auto") {
+        theme = window.matchMedia("(prefers-color-scheme: dark)")
+            .matches
+            ? "dark"
+            : "default";
+    }
+
+    return theme;
+}, getOriginalAppearance() {
+    const defaultTheme = "default";
+    return localStorage.getItem("hs_theme") || defaultTheme;
+} };
+
+HSThemeAppearance.init();
+
+window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", () => {
+    if (HSThemeAppearance.getOriginalAppearance() === "auto") {
+        HSThemeAppearance.setAppearance("auto", false);
+    }
+});
+
+window.addEventListener("load", () => {
     const $clickableThemes = document.querySelectorAll(
-        '[data-hs-theme-click-value]',
-    )
-    const $switchableThemes = document.querySelectorAll(
-        '[data-hs-theme-switch]',
-    )
+        "[data-hs-theme-click-value]",
+    );
+    const $switchableThemes = document.querySelectorAll("[data-hs-theme-switch]",
+    );
 
     $clickableThemes.forEach(($item) => {
-        $item.addEventListener('click', () => {
-            const switchThem = () => HSThemeAppearance.setAppearance(
-                $item.getAttribute('data-hs-theme-click-value'),
-                true,
-                true,
-            )
+        $item.addEventListener("click", () => {
+            const switchThem = () =>
+                HSThemeAppearance.setAppearance(
+                    $item.getAttribute("data-hs-theme-click-value"),
+                    true,
+                    true,
+                );
 
             if (document.startViewTransition) {
                 document.startViewTransition(() => {
-                    injectViewTransitionStyleCSS()
-                    switchThem()
-                })
+                    injectViewTransitionStyleCSS();
+                    switchThem();
+                });
             }
             else {
-                switchThem()
+                switchThem();
             }
-        })
-    })
+        });
+    });
 
     $switchableThemes.forEach(($item) => {
-        $item.addEventListener('change', (e) => {
-            HSThemeAppearance.setAppearance(e.target.checked ? 'dark' : 'default')
-        })
+        $item.addEventListener("change", (e) => {
+            HSThemeAppearance.setAppearance(
+                e.target.checked ? "dark" : "default",
+            );
+        });
 
-        $item.checked = HSThemeAppearance.getAppearance() === 'dark'
-    })
+        $item.checked = HSThemeAppearance.getAppearance() === "dark";
+    });
 
-    window.addEventListener('on-hs-appearance-change', (e) => {
+    window.addEventListener("on-hs-appearance-change", (e) => {
         $switchableThemes.forEach(($item) => {
-            $item.checked = e.detail === 'dark'
-        })
-    })
-})
+            $item.checked = e.detail === "dark";
+        });
+    });
+});
 </script>
 <script is:inline src="/vendor/preline/collapse2.1.0.min.js"></script>
