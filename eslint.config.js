@@ -1,4 +1,4 @@
-import antfu from "@antfu/eslint-config"
+import antfu from "@antfu/eslint-config";
 
 export default antfu({
     stylistic: {
@@ -29,4 +29,4 @@ export default antfu({
 
     jsonc: false,
     yaml: false,
-})
+});

@@ -1,34 +1,34 @@
 ---
-import Icon from '@components/ui/icons/icon.astro'
+import Icon from "@components/ui/icons/icon.astro";
 
-const { pageTitle, title = 'Share' } = Astro.props
+const { pageTitle, title = "Share" } = Astro.props;
 
 interface Props {
-    pageTitle: string
-    title?: string
+    pageTitle: string;
+    title?: string;
 }
 
 type SocialPlatform = {
-    name: string
-    url: string
-    svg: string
-}
+    name: string;
+    url: string;
+    svg: string;
+};
 
 const socialPlatforms: SocialPlatform[] = [
     {
-        name: 'Facebook',
+        name: "Facebook",
         url: `https://www.facebook.com/share.php?u=${Astro.url}&title=${pageTitle}`,
-        svg: 'facebook',
+        svg: "facebook",
     },
     {
-        name: 'X',
+        name: "X",
         url: `https://twitter.com/home/?status=${pageTitle}${Astro.url}`,
-        svg: 'x',
+        svg: "x",
     },
     {
-        name: 'LinkedIn',
+        name: "LinkedIn",
         url: `https://www.linkedin.com/shareArticle?mini=true&url=${Astro.url}&title=${pageTitle}`,
-        svg: 'linkedIn',
+        svg: "linkedIn",
     },
 ];
 ---
@@ -112,39 +112,39 @@ const socialPlatforms: SocialPlatform[] = [
 
 <script is:inline>
 (function () {
-    window.addEventListener('load', () => {
-        const $clipboards = document.querySelectorAll('.js-clipboard')
+    window.addEventListener("load", () => {
+        const $clipboards = document.querySelectorAll(".js-clipboard");
         $clipboards.forEach((el) => {
             const clipboard = new ClipboardJS(el, {
                 text: () => {
-                    return window.location.href
+                    return window.location.href;
                 },
-            })
-            clipboard.on('success', () => {
-                const $default = el.querySelector('.js-clipboard-default')
-                const $success = el.querySelector('.js-clipboard-success')
-                const $successText = el.querySelector('.js-clipboard-success-text')
-                const successText = el.dataset.clipboardSuccessText || ''
-                let oldSuccessText
+            });
+            clipboard.on("success", () => {
+                const $default = el.querySelector(".js-clipboard-default");
+                const $success = el.querySelector(".js-clipboard-success");
+                const $successText = el.querySelector(".js-clipboard-success-text");
+                const successText = el.dataset.clipboardSuccessText || "";
+                let oldSuccessText;
 
                 if ($successText) {
-                    oldSuccessText = $successText.textContent
-                    $successText.textContent = successText
+                    oldSuccessText = $successText.textContent;
+                    $successText.textContent = successText;
                 }
                 if ($default && $success) {
-                    $default.style.display = 'none'
-                    $success.style.display = 'block'
+                    $default.style.display = "none";
+                    $success.style.display = "block";
                 }
 
                 setTimeout(() => {
-                    if ($successText && oldSuccessText) { $successText.textContent = oldSuccessText }
+                    if ($successText && oldSuccessText) { $successText.textContent = oldSuccessText; }
                     if ($default && $success) {
-                        $success.style.display = ''
-                        $default.style.display = ''
+                        $success.style.display = "";
+                        $default.style.display = "";
                     }
-                }, 800)
-            })
-        })
-    })
-})()
+                }, 800);
+            });
+        });
+    });
+})();
 </script>

@@ -1,15 +1,15 @@
 ---
-import type { CollectionEntry } from 'astro:content'
-import LeftSection from '@components/ui/sections/LeftSection.astro'
-import RightSection from '@components/ui/sections/RightSection.astro'
+import type { CollectionEntry } from "astro:content";
+import LeftSection from "@components/ui/sections/LeftSection.astro";
+import RightSection from "@components/ui/sections/RightSection.astro";
 
-const { blogs } = Astro.props
+const { blogs } = Astro.props;
 
 interface Props {
-    blogs: CollectionEntry<'posts'>[]
+    blogs: CollectionEntry<"posts">[];
 }
 
-const posts = blogs.slice(0, 5)
+const posts = blogs.slice(0, 5);
 ---
 
 {

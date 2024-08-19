@@ -1,32 +1,32 @@
 ---
-import { type CollectionEntry, getCollection } from 'astro:content'
-import BaseLayout from '@layouts/BaseLayout.astro'
-import BlogComments from '@components/blog/BlogComments'
-import Image from '@components/ui/images/Image.astro'
-import { timeago } from '@support/time'
-import { Settings } from '../../config'
-import { SITE } from '@/config'
+import { type CollectionEntry, getCollection } from "astro:content";
+import BaseLayout from "@layouts/BaseLayout.astro";
+import BlogComments from "@components/blog/BlogComments";
+import Image from "@components/ui/images/Image.astro";
+import { timeago } from "@support/time";
+import { Settings } from "../../config";
+import { SITE } from "@/config";
 
 export async function getStaticPaths() {
-    const posts = await getCollection('posts')
+    const posts = await getCollection("posts");
     return posts.map(post => ({
         params: { slug: post.slug },
         props: post,
-    }))
+    }));
 }
 
-type Props = CollectionEntry<'posts'>
+type Props = CollectionEntry<"posts">;
 
-const post = Astro.props
-const { Content, remarkPluginFrontmatter } = await post.render()
+const post = Astro.props;
+const { Content, remarkPluginFrontmatter } = await post.render();
 
-const category: CollectionEntry<'categories'> = (await getCollection('categories')).filter(
+const category: CollectionEntry<"categories"> = (await getCollection("categories")).filter(
     c => c.slug === post.data.category,
-).pop()
+).pop();
 
-const tags = post.data.tags ?? [category.slug]
-const URL = Astro.url.href
-const ogImage = post.data.ogImage
+const tags = post.data.tags ?? [category.slug];
+const URL = Astro.url.href;
+const ogImage = post.data.ogImage;
 ---
 
 <BaseLayout
@@ -34,21 +34,21 @@ const ogImage = post.data.ogImage
     description={post.data.description}
     ogImage={ogImage}
     structuredData={{
-        '@context': 'https://schema.org',
-        '@type': 'NewsArticle',
-        '@id': URL,
-        'url': URL,
-        'description': post.data.description,
-        'image': [
+        "@context": "https://schema.org",
+        "@type": "NewsArticle",
+        "@id": URL,
+        "url": URL,
+        "description": post.data.description,
+        "image": [
             // post.data.banner,
         ],
-        'headline': post.data.title,
-        'datePublished': post.data.pubDate,
-        'dateModified': post.data.pubDate,
-        'author': [{
-            '@type': 'Person',
-            'name': SITE.author,
-            'url': SITE.url,
+        "headline": post.data.title,
+        "datePublished": post.data.pubDate,
+        "dateModified": post.data.pubDate,
+        "author": [{
+            "@type": "Person",
+            "name": SITE.author,
+            "url": SITE.url,
         }],
     }}
 >

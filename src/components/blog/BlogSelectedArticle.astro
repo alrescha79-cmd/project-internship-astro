@@ -1,12 +1,12 @@
 ---
-import type { CollectionEntry } from 'astro:content'
-import Icon from '@components/ui/icons/icon.astro'
-import BlogCard from './BlogCard.astro'
+import type { CollectionEntry } from "astro:content";
+import Icon from "@components/ui/icons/icon.astro";
+import BlogCard from "./BlogCard.astro";
 
-const { posts } = Astro.props
+const { posts } = Astro.props;
 
 interface Props {
-    posts: CollectionEntry<'posts'>[]
+    posts: CollectionEntry<"posts">[];
 }
 ---
 

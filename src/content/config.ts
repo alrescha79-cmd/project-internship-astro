@@ -1,7 +1,7 @@
-import { defineCollection, z } from 'astro:content'
+import { defineCollection, z } from "astro:content";
 
 const posts = defineCollection({
-    type: 'content',
+    type: "content",
     schema: ({ image }) => z.object({
         title: z.string(),
         description: z.string(),
@@ -25,18 +25,18 @@ const posts = defineCollection({
         updatedDate: z.coerce.date().optional(),
         oldViewCount: z.number().optional(),
     }),
-})
+});
 
 const categoryCollection = defineCollection({
-    type: 'content',
+    type: "content",
     schema: () => z.object({
         title: z.string(),
         description: z.string(),
     }),
-})
+});
 
 const friendsCollection = defineCollection({
-    type: 'data',
+    type: "data",
     schema: () => z.array(
         z.object({
             title: z.string(),
@@ -50,6 +50,6 @@ const friendsCollection = defineCollection({
             }),
         }),
     ),
-})
+});
 
-export const collections = { posts, categories: categoryCollection, friends: friendsCollection }
+export const collections = { posts, categories: categoryCollection, friends: friendsCollection };
